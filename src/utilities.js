@@ -9,3 +9,12 @@ export const checkAuthorization = async (email, password) => {
   const response = await fetch(url, optionsObj);
   return await response.json();
 };
+
+export const fetchCall = async url => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error(Error(response.statusText));
+    return "failed";
+  }
+  return await response.json();
+};
