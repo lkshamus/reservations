@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { checkAuthorization } from "./utilities";
 
 export default class Login extends Component {
   constructor() {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      checkAuthorization: checkAuthorization
     };
   }
 
@@ -15,21 +17,46 @@ export default class Login extends Component {
       [e.target.name]: e.target.value
     });
   };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    try {
+      const response = await this.state.checkAuthorization(email, password);
+      console.log(response);
+    } catch {
+      console.log("error");
+    }
+  };
+
   render() {
     return (
-      <form>
+      <form
+        onSubmit={e => {
+          this.handleSubmit(e);
+        }}
+      >
         <input
           onChange={this.handleChange}
           placeholder="Email"
           value={this.state.email}
+          name="email"
         />
         <input
           onChange={this.handleChange}
           placeholder="Password"
           type="password"
           value={this.state.password}
+          name="password"
         />
-        <button>submit</button>
+        <button
+          onClick={e => {
+            e.preventDefault();
+            this.handleSubmit(e);
+          }}
+        >
+          submit
+        </button>
       </form>
     );
   }
