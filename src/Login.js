@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { checkAuthorization } from "./utilities";
 
 export default class Login extends Component {
@@ -23,6 +22,8 @@ export default class Login extends Component {
     const { email, password } = this.state;
     try {
       const response = await this.state.checkAuthorization(email, password);
+      localStorage.setItem("token", JSON.stringify(response.jwt));
+      this.props.history.push("/");
       console.log(response);
     } catch {
       console.log("error");
