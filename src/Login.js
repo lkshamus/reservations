@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+
 import { checkAuthorization } from "./utilities";
 
 export default class Login extends Component {
@@ -8,7 +9,9 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      checkAuthorization: checkAuthorization
+      checkAuthorization: checkAuthorization,
+      loginError: "",
+      isAuthenticated: false
     };
   }
 
@@ -18,12 +21,33 @@ export default class Login extends Component {
     });
   };
 
+  userWarning = async (type, warning) => {
+    await this.setState({
+      [type]: warning
+    });
+    await setTimeout(this.removeWarning, 5000);
+  };
+
+  removeWarning = () => {
+    this.setState({
+      loginError: ""
+    });
+  };
+
   handleSubmit = async e => {
     e.preventDefault();
     const { email, password } = this.state;
     try {
       const response = await this.state.checkAuthorization(email, password);
+      localStorage.setItem("token", JSON.stringify(response.jwt));
       console.log(response);
+      if (response.jwt) {
+        this.setState({ isAuthenticated: true });
+        this.props.history.push("/");
+      }
+      setTimeout(() => {
+        this.userWarning("loginError", "login-error-active");
+      }, 500);
     } catch {
       console.log("error");
     }
@@ -57,6 +81,11 @@ export default class Login extends Component {
         >
           submit
         </button>
+        <div className={`login-error-wrapper ${this.state.loginError}`}>
+          <p className="login-error-text">
+            incorrect email/password combination
+          </p>
+        </div>
       </form>
     );
   }
