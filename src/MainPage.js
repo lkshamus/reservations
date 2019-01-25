@@ -10,18 +10,23 @@ export default class MainPage extends Component {
 
   componentDidMount = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
-    const requestURL = `https://kennel-staging.herokuapp.com/api/v1/reservations/current`;
-    const optionsObj = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-    const response = await fetch(requestURL, optionsObj);
-    const dogData = await response.json();
-    await this.setState({ dogs: dogData.data });
-    return dogData;
+    if (token) {
+      const requestURL = `https://kennel-staging.herokuapp.com/api/v1/reservations/current`;
+      const optionsObj = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(requestURL, optionsObj);
+      const dogData = await response.json();
+      await this.setState({ dogs: dogData.data });
+      return dogData;
+    } else {
+      this.props.history.push("/login");
+    }
   };
+
   render() {
     const { dogs } = this.state;
     console.log(dogs);
