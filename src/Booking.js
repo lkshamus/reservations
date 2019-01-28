@@ -4,15 +4,182 @@ import Header from "./Header";
 export default class Booking extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      ownerFn: "",
+      ownerLn: "",
+      address: "",
+      cellNumber: "",
+      homeNumber: "",
+      ownerEmail: "",
+      petName: "",
+      species: "",
+      breed: "",
+      color: "",
+      dob: "",
+      spayed: "",
+      medications: "",
+      feeding: "",
+      shots: "",
+      practiceName: "",
+      vetName: "",
+      vetAddress: "",
+      vetPhone: "",
+      vetEmail: ""
+    };
   }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handleSUbmit = e => {
+    e.preventDefault();
+  };
+
   render() {
     return (
       <div>
         <Header />
+
         <form>
-          <input placeholder="Name" />
+          <h1>Owner Information</h1>
+          <input
+            placeholder="Owner's First Name"
+            onChange={this.handleChange}
+            value={this.state.ownerFn}
+            name="ownerFn"
+          />
+          <input
+            placeholder="Owner's Last Name"
+            onChange={this.handleChange}
+            value={this.state.ownerLn}
+            name="ownerLn"
+          />
+          <input
+            placeholder="Address"
+            onChange={this.handleChange}
+            value={this.state.address}
+            name="address"
+          />
+          <input
+            placeholder="Cell Phone"
+            onChange={this.handleChange}
+            value={this.state.cellNumber}
+            name="cellNumber"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          />
+          <input
+            placeholder="Home Phone"
+            onChange={this.handleChange}
+            value={this.state.homeNumber}
+            name="homeNumber"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          />
+          <input
+            placeholder="Email"
+            type="email"
+            onChange={this.handleChange}
+            value={this.state.ownerEmail}
+            name="ownerEmail"
+          />
         </form>
+        <h1>Pet Information</h1>
+        <form>
+          <input
+            placeholder="Pet Name"
+            onChange={this.handleChange}
+            value={this.state.petName}
+            name="petName"
+          />
+          <input
+            placeholder="Species"
+            onChange={this.handleChange}
+            value={this.state.species}
+            name="species"
+          />
+          <input
+            placeholder="Breed"
+            onChange={this.handleChange}
+            value={this.state.breed}
+            name="breed"
+          />
+          <input
+            placeholder="Pet Color"
+            onChange={this.handleChange}
+            value={this.state.color}
+            name="color"
+          />
+          <input
+            placeholder="Date of Birth"
+            onChange={this.handleChange}
+            value={this.state.dob}
+            name="dob"
+          />
+          <select name="spayed" onChange={this.handleChange}>
+            <option value={true} name="spayed">
+              Spayed/Neutured
+            </option>
+            <option value={false} name="spayed">
+              Not Spayed/Neutured
+            </option>
+          </select>
+          <input
+            placeholder="Medications"
+            onChange={this.handleChange}
+            value={this.state.medications}
+            name="medications"
+          />
+          <input
+            placeholder="Feeding Instructions"
+            onChange={this.handleChange}
+            value={this.state.feeding}
+            name="feeding"
+          />
+          <input
+            placeholder="Shots"
+            onChange={this.handleChange}
+            value={this.state.shots}
+            name="shots"
+          />
+        </form>
+        <h1>Vet Information</h1>
+        <form>
+          <input
+            placeholder="Practice Name"
+            onChange={this.handleChange}
+            value={this.state.practiceName}
+            name="practiceName"
+          />
+          <input
+            placeholder="Vet Name"
+            onChange={this.handleChange}
+            value={this.state.vetName}
+            name="vetName"
+          />
+          <input
+            placeholder="Vet's Address"
+            onChange={this.handleChange}
+            value={this.state.vetAddress}
+            name="vetAddress"
+          />
+          <input
+            placeholder="Vet Phone Number"
+            onChange={this.handleChange}
+            value={this.state.vetPhone}
+            name="vetPhone"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          />
+          <input
+            placeholder="Vet's Email"
+            onChange={this.handleChange}
+            value={this.state.vetEmail}
+            name="vetEmail"
+            type="email"
+          />
+        </form>
+        <h1>Reservation Information</h1>
       </div>
     );
   }
