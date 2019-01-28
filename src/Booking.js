@@ -19,7 +19,12 @@ export default class Booking extends Component {
       spayed: "",
       medications: "",
       feeding: "",
-      shots: ""
+      shots: "",
+      practiceName: "",
+      vetName: "",
+      vetAddress: "",
+      vetPhone: "",
+      vetEmail: ""
     };
   }
 
@@ -37,8 +42,9 @@ export default class Booking extends Component {
     return (
       <div>
         <Header />
-        <h1>Owner Information</h1>
+
         <form>
+          <h1>Owner Information</h1>
           <input
             placeholder="Owner's First Name"
             onChange={this.handleChange}
@@ -119,9 +125,60 @@ export default class Booking extends Component {
               Not Spayed/Neutured
             </option>
           </select>
+          <input
+            placeholder="Medications"
+            onChange={this.handleChange}
+            value={this.state.medications}
+            name="medications"
+          />
+          <input
+            placeholder="Feeding Instructions"
+            onChange={this.handleChange}
+            value={this.state.feeding}
+            name="feeding"
+          />
+          <input
+            placeholder="Shots"
+            onChange={this.handleChange}
+            value={this.state.shots}
+            name="shots"
+          />
         </form>
         <h1>Vet Information</h1>
-        <form />
+        <form>
+          <input
+            placeholder="Practice Name"
+            onChange={this.handleChange}
+            value={this.state.practiceName}
+            name="practiceName"
+          />
+          <input
+            placeholder="Vet Name"
+            onChange={this.handleChange}
+            value={this.state.vetName}
+            name="vetName"
+          />
+          <input
+            placeholder="Vet's Address"
+            onChange={this.handleChange}
+            value={this.state.vetAddress}
+            name="vetAddress"
+          />
+          <input
+            placeholder="Vet Phone Number"
+            onChange={this.handleChange}
+            value={this.state.vetPhone}
+            name="vetPhone"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          />
+          <input
+            placeholder="Vet's Email"
+            onChange={this.handleChange}
+            value={this.state.vetEmail}
+            name="vetEmail"
+            type="email"
+          />
+        </form>
         <h1>Reservation Information</h1>
       </div>
     );
