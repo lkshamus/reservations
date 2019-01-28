@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "./Header";
 
 export default class MainPage extends Component {
   constructor() {
@@ -45,6 +46,7 @@ export default class MainPage extends Component {
     }
     return (
       <div>
+        <Header />
         <h1>{dogInfo}</h1>
       </div>
     );
