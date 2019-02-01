@@ -24,7 +24,9 @@ export default class Booking extends Component {
       vetName: "",
       vetAddress: "",
       vetPhone: "",
-      vetEmail: ""
+      vetEmail: "",
+      checkin: "",
+      checkout: "",
     };
   }
 
@@ -84,9 +86,7 @@ export default class Booking extends Component {
             value={this.state.ownerEmail}
             name="ownerEmail"
           />
-        </form>
         <h1>Pet Information</h1>
-        <form>
           <input
             placeholder="Pet Name"
             onChange={this.handleChange}
@@ -143,9 +143,7 @@ export default class Booking extends Component {
             value={this.state.shots}
             name="shots"
           />
-        </form>
         <h1>Vet Information</h1>
-        <form>
           <input
             placeholder="Practice Name"
             onChange={this.handleChange}
@@ -178,8 +176,22 @@ export default class Booking extends Component {
             name="vetEmail"
             type="email"
           />
+          <h1>Reservation Information</h1>
+          <input 
+            placeholder='check in'
+            type='date' 
+            value={this.state.checkin}
+            onChange={this.handleChange}
+            name='checkin'
+          />
+          <input 
+            placeholder='check out'
+            type='date' 
+            value={this.state.checkout}
+            onChange={this.handleChange}
+            name='checkout'
+          />
         </form>
-        <h1>Reservation Information</h1>
       </div>
     );
   }
