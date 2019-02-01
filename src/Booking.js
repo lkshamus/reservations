@@ -16,7 +16,7 @@ export default class Booking extends Component {
       breed: "",
       color: "",
       dob: "",
-      spayed: "",
+      spayed: true,
       medications: "",
       feeding: "",
       shots: "",
@@ -36,16 +36,45 @@ export default class Booking extends Component {
     });
   };
 
-  handleSUbmit = e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-  };
+    const token = JSON.parse(localStorage.getItem("token"))
+    const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`
+    const petBody = JSON.stringify({
+      "name": this.state.petName,
+      "species": this.state.species,
+      "breed": this.state.breed,
+      "color": this.state.color,
+      "dob": this.state.dob,
+      "spayed_neutered": this.state.spayed,
+      "medications": this.state.medications,
+      "feeding_instructions": this.state.feeding,
+      "shots": this.state.shots
+    })
+    const optionsObj = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: petBody,
+  }
+  console.log(petBody)
+  try {
+    const response = await fetch(requestURL, optionsObj);
+    return await response.json();
+  } catch(error) {
+    console.log(error)
+  }
+}
 
   render() {
     return (
       <div>
         <Header />
 
-        <form>
+        <form onSubmit={e => this.handleSubmit(e)}>
           <h1>Owner Information</h1>
           <input
             placeholder="Owner's First Name"
@@ -191,6 +220,7 @@ export default class Booking extends Component {
             onChange={this.handleChange}
             name='checkout'
           />
+          <input name='submit' type='submit' />
         </form>
       </div>
     );
