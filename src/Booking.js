@@ -37,6 +37,7 @@ export default class Booking extends Component {
   };
 
   handleSubmit = async (e) => {
+    console.log(typeof this.state.spayed)
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem("token"))
     const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`
@@ -150,7 +151,7 @@ export default class Booking extends Component {
             <option value={true} name="spayed">
               Spayed/Neutured
             </option>
-            <option value={false} name="spayed">
+            <option value={'not neutered'} name="spayed">
               Not Spayed/Neutured
             </option>
           </select>
