@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./Header";
+import { petPost, ownerPost, vetPost } from "./utilities"
 
 export default class Booking extends Component {
   constructor() {
@@ -27,6 +28,7 @@ export default class Booking extends Component {
       vetEmail: "",
       checkin: "",
       checkout: "",
+      petPost: petPost
     };
   }
 
@@ -39,32 +41,36 @@ export default class Booking extends Component {
   handleSubmit = async (e) => {
     console.log(typeof this.state.spayed)
     e.preventDefault();
-    const token = JSON.parse(localStorage.getItem("token"))
-    const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`
-    const petBody = JSON.stringify({
-      "name": this.state.petName,
-      "species": this.state.species,
-      "breed": this.state.breed,
-      "color": this.state.color,
-      "dob": this.state.dob,
-      "spayed_neutered": this.state.spayed,
-      "medications": this.state.medications,
-      "feeding_instructions": this.state.feeding,
-      "shots": this.state.shots
-    })
-    const optionsObj = {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: petBody,
-  }
-  console.log(petBody)
+    const { ownerFn, ownerLn, address, cellNumber, homeNumber, ownerEmail, petName, species, breed, color, dob, spayed, medications, feeding, shots, practiceName, vetName, vetAddress, vetPhone, vetEmail } = this.state
+    // const token = JSON.parse(localStorage.getItem("token"))
+    // const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`
+    // const petBody = JSON.stringify({
+    //   "name": this.state.petName,
+    //   "species": this.state.species,
+    //   "breed": this.state.breed,
+    //   "color": this.state.color,
+    //   "dob": this.state.dob,
+    //   "spayed_neutered": this.state.spayed,
+    //   "medications": this.state.medications,
+    //   "feeding_instructions": this.state.feeding,
+    //   "shots": this.state.shots
+    // })
+    // const optionsObj = {
+    // method: 'POST',
+    // headers: {
+    //   Authorization: `Bearer ${token}`,
+    //   'Content-Type': 'application/json',
+    //   Accept: 'application/json',
+    // },
+    // body: petBody,
+  // }
+  // console.log(petBody)
   try {
-    const response = await fetch(requestURL, optionsObj);
-    return await response.json();
+    await petPost(petName, species, breed, color, dob, spayed, medications, feeding, shots)
+    await ownerPost(ownerFn, ownerLn, address, cellNumber, homeNumber, ownerEmail)
+    await vetPost(practiceName, vetName, vetAddress, vetPhone, vetEmail)
+    // const response = await fetch(requestURL, optionsObj);
+    // return await response.json();
   } catch(error) {
     console.log(error)
   }
