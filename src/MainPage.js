@@ -5,13 +5,15 @@ export default class MainPage extends Component {
   constructor() {
     super();
     this.state = {
-      dogs: []
+      dogs: [],
+      pets: []
     };
   }
 
   componentDidMount = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     if (token) {
+      await this.fetchPets()
       const requestURL = `https://kennel-staging.herokuapp.com/api/v1/reservations/current`;
       const optionsObj = {
         method: "GET",
@@ -27,6 +29,26 @@ export default class MainPage extends Component {
       this.props.history.push("/login");
     }
   };
+
+  fetchPets = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`;
+      const optionsObj = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(requestURL, optionsObj);
+      const petInfo = await response.json();
+      await this.setState({ pets: petInfo });
+      console.log('hellooooooo???', petInfo)
+      return petInfo;
+    } catch {
+      console.log('errrrr')
+    }
+  }
 
   render() {
     const { dogs } = this.state;
