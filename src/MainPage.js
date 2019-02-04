@@ -5,7 +5,7 @@ export default class MainPage extends Component {
   constructor() {
     super();
     this.state = {
-      dogs: []
+      dogs: [],
     };
   }
 
