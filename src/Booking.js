@@ -39,7 +39,6 @@ export default class Booking extends Component {
   };
 
   handleSubmit = async (e) => {
-    console.log(typeof this.state.spayed)
     e.preventDefault();
     const { ownerFn, ownerLn, address, cellNumber, homeNumber, ownerEmail, petName, species, breed, color, dob, spayed, medications, feeding, shots, practiceName, vetName, vetAddress, vetPhone, vetEmail } = this.state
     // const token = JSON.parse(localStorage.getItem("token"))
@@ -69,6 +68,8 @@ export default class Booking extends Component {
     await petPost(petName, species, breed, color, dob, spayed, medications, feeding, shots)
     await ownerPost(ownerFn, ownerLn, address, cellNumber, homeNumber, ownerEmail)
     await vetPost(practiceName, vetName, vetAddress, vetPhone, vetEmail)
+    console.log(petName)
+    // await createRes(this.props.owners, )
     // const response = await fetch(requestURL, optionsObj);
     // return await response.json();
   } catch(error) {
@@ -76,7 +77,34 @@ export default class Booking extends Component {
   }
 }
 
+  createRes = async (owner, pet, ownerID, petID) => {
+    const requestURL = `http://kennel-staging.herokuapp.com/api/v1/reservations`
+    const {pets, owners, vets } = this.props
+    const ownerObj = owners.find(petOwner => petOwner.attributes.firstName == ownerID)
+    const petObj = pets.find(pet => pet.attributes.name == petID)
+    const random = Math.floor(Math.random() * 50) + 1
+
+    const reservationBody = JSON.stringify({
+      pet_id: petObj.id,
+      owner_id: ownerObj.id,
+      run_number: random,
+      checkin: '2019-02-03',
+      checkout: '2019-02-14',
+      grooming: 'true',
+      daycare: 'false',
+      boarding: 'true',
+    })
+    const response = await fetch(requestURL, reservationBody);
+    return await response.json();
+  }
+
   render() {
+    try {
+      console.log(this.props)
+    } catch {
+      console.log('whoops')
+    }
+    
     return (
       <div>
         <Header />
@@ -211,21 +239,6 @@ export default class Booking extends Component {
             value={this.state.vetEmail}
             name="vetEmail"
             type="email"
-          />
-          <h1>Reservation Information</h1>
-          <input 
-            placeholder='check in'
-            type='date' 
-            value={this.state.checkin}
-            onChange={this.handleChange}
-            name='checkin'
-          />
-          <input 
-            placeholder='check out'
-            type='date' 
-            value={this.state.checkout}
-            onChange={this.handleChange}
-            name='checkout'
           />
           <input name='submit' type='submit' />
         </form>

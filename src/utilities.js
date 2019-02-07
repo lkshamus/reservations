@@ -95,3 +95,30 @@ export const vetPost = async (practiceName, vetName, vetAddress, vetPhone, vetEm
     const response = await fetch(requestURL, optionsObj);
     return await response.json();
 }
+
+export const reservationPost = async () => {
+    const token = JSON.parse(localStorage.getItem("token"))
+    const requestURL = `http://kennel-staging.herokuapp.com/api/v1/pets`
+    const vetBody = JSON.stringify({
+      "pet_id": "1",
+      "owner_id": "1",
+      "run_number": "1",
+      "checkin": "2019-02-03",
+      "checkout": "2019-02-14",
+      "grooming": "true",
+      "daycare": "false",
+      "boarding": "true"
+    })
+    const optionsObj = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: vetBody,
+  }
+  console.log(vetBody)
+    const response = await fetch(requestURL, optionsObj);
+    return await response.json();
+}
