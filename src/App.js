@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Login from "./Login";
 import MainPage from "./MainPage";
 import Booking from "./Booking";
+import Reservations from './Reservations'
 import "./App.css";
 
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
       const response = await fetch(requestURL, optionsObj);
       const petInfo = await response.json();
       await this.setState({ pets: petInfo.data });
-      console.log('hellooooooo???', petInfo.data)
+      console.log(petInfo.data)
       return petInfo;
     } catch {
       console.log('errrrr')
@@ -96,9 +97,19 @@ class App extends Component {
           )}
           />
         <Route 
-          exact path="/booking"
+          exact path="/newcustomer"
           render={() => (
             <Booking 
+              pets={this.state.pets}
+              owners={this.state.owners}
+              vets={this.state.vets}
+            />
+          )}
+        />
+        <Route 
+          exact path="/reservation"
+          render={() => (
+            <Reservations 
               pets={this.state.pets}
               owners={this.state.owners}
               vets={this.state.vets}
